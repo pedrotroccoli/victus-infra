@@ -1,0 +1,9 @@
+services:
+  victus-server:
+    image: victus-ruby-server:latest
+    container_name: victus-api
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    restart: unless-stopped

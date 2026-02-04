@@ -9,7 +9,7 @@ services:
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.letsencrypt.acme.email=victusjournal@pedrotroccoli.com"
+      - "--certificatesresolvers.letsencrypt.acme.email=${LETSENCRYPT_EMAIL}"
       - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
     ports:
       - "80:80"
@@ -23,14 +23,14 @@ services:
     image: victus-ruby-server:latest
     container_name: victus-api
     env_file:
-      - .env-server
+      - .env
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.victus-api.rule=Host(`server.victusjournal.com`)"
+      - "traefik.http.routers.victus-api.rule=Host(`${VICTUS_SERVER_DOMAIN}`)"
       - "traefik.http.routers.victus-api.entrypoints=websecure"
       - "traefik.http.routers.victus-api.tls.certresolver=letsencrypt"
       - "traefik.http.services.victus-api.loadbalancer.server.port=3000"
-      - "traefik.http.routers.victus-api-http.rule=Host(`server.victusjournal.com`)"
+      - "traefik.http.routers.victus-api-http.rule=Host(`${VICTUS_SERVER_DOMAIN}`)"
       - "traefik.http.routers.victus-api-http.entrypoints=web"
       - "traefik.http.routers.victus-api-http.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"

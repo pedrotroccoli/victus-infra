@@ -23,7 +23,7 @@ services:
     image: victus-ruby-server:latest
     container_name: victus-api
     env_file:
-      - .env
+      - .env-server
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.victus-api.rule=Host(`server.victusjournal.com`)"
